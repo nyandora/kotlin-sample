@@ -15,20 +15,20 @@ fun main() {
                         delay(2000L)
                         println("this is never printed.")
                     } catch (e: CancellationException) {
-                        println("cancelled caused by 1st async call.")
+                        println("cancelled caused by 1st async call failure.")
                     }
                 }
                 println("waiting...")
                 try {
                     deferred.await()
-                } catch (ae: java.lang.ArithmeticException) {
+                } catch (ae: ArithmeticException) {
                     println("the exception thrown by 1st async call is caught.")
                     throw ae
                     // even though the exception is not thrown, coroutineScope() throws ArithmeticException.
                     // because by a failure in 1st async call the parent coroutine is already marked "failed".
                 }
             }
-        } catch (ae: java.lang.ArithmeticException) {
+        } catch (ae: ArithmeticException) {
             println("coroutineScope() throws the exception thrown in 1st async call.")
         }
     }
